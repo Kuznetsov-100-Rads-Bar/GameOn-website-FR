@@ -11,7 +11,7 @@ function editNav() {
 const modalbg = document.querySelector(".bground");
 const modalBtn = document.querySelectorAll(".modal-btn");
 const formData = document.querySelectorAll(".formData");
-
+// On créer la variable , en vérifiant son contenu
 const modalCloseButton = document.querySelector(".close");
 
 const form = document.getElementById("form");
@@ -61,8 +61,8 @@ const validateForm = (event) => {
   const emailRegex = /[A-Z0-9._%+-]+@[A-Z0-9-]+.+.[A-Z]{2,4}/gim;
   const quantityRegex = /\d+/; // Nombre uniquement
 
-  /**
-   * récupérer les valeurs des champs dans un tableau d'objets "data"
+  /*
+  récupérer les valeurs des champs dans un tableau d'objets "data"
    */
   const data = {
     firstName: firstNameInput.value,
@@ -72,8 +72,8 @@ const validateForm = (event) => {
     quantity: quantityInput.value,
   };
 
-  /**
-   * initialiser un tableau vide d'erreurs
+  /*
+    initialiser un tableau vide d'erreurs
    */
   const errors = {};
 
@@ -81,6 +81,7 @@ const validateForm = (event) => {
     formData.setAttribute("data-error-visible", false);
     formData.setAttribute("data-error", "");
   });
+
   // Affiche les messages d'erreurs si condition pas respecté
   const setError = (inputElement, errorMessage) => {
     inputElement === locationRadios
@@ -89,7 +90,12 @@ const validateForm = (event) => {
       : (inputElement.parentNode.setAttribute("data-error-visible", true),
         inputElement.parentNode.setAttribute("data-error", errorMessage));
   };
+
   // Des conditions Ternaires
+  /* On évalue d'abord la condition donnée. 
+  Si la condition retourne vrai, alors on retourne l'erreur correspondant au champ,
+   ainsi que son message d'erreur*/
+
   data.firstName.length < 2
     ? (setError(
         firstNameInput,
@@ -97,6 +103,14 @@ const validateForm = (event) => {
       ),
       (errors["firstName"] = true))
     : null;
+
+  /* 
+  if (data.firstName.length < 2) {
+    setError(firstNameInput, "Veuillez entrer 2 caractères ou plus pour le champ du nom.");
+    errors["firstName"] = true;
+  }
+  */
+
   data.lastName.length < 2
     ? (setError(
         lastNameInput,
@@ -136,11 +150,24 @@ const validateForm = (event) => {
 const confirmationForm = () => {
   const modalBody = document.querySelector(".modal-body");
   form.style.display = "none";
+  modalBody.style.height = "90vh"; //
+  modalBody.style.display = "flex";
+  modalBody.style.alignItems = "center";
+
+  const modalContent = document.createElement("div");
+  modalContent.style.margin = "auto auto";
+  modalContent.style.display = "flex";
+  modalContent.style.flexDirection = "column";
+  modalContent.style.justifyContent = "center";
+  modalContent.style.height = "100%";
 
   const confirmationTitle = document.createElement("h3");
   confirmationTitle.textContent = "Merci pour votre inscription";
   confirmationTitle.style.textAlign = "center";
   confirmationTitle.style.margin = "16px 0";
+  confirmationTitle.style.textContent = "auto";
+  confirmationTitle.style.flex = "3";
+  confirmationTitle.style.marginTop = "65%";
 
   const confirmationButton = document.createElement("button");
   confirmationButton.classList.add("button");
@@ -150,6 +177,7 @@ const confirmationForm = () => {
     form.submit();
   });
   // On insère des éléments dans le modalBody
-  modalBody.appendChild(confirmationTitle);
-  modalBody.appendChild(confirmationButton);
+  modalBody.appendChild(modalContent);
+  modalContent.appendChild(confirmationTitle);
+  modalContent.appendChild(confirmationButton);
 };
