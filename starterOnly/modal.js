@@ -15,6 +15,7 @@ const formData = document.querySelectorAll(".formData");
 const modalCloseButton = document.querySelector(".close");
 
 const form = document.getElementById("form");
+/* Ecoute l'evenement (submit: envoi du fomulaire (quand le bouton est pressé)) et lance la fonction validateForm(). */
 form.addEventListener("submit", (event) => validateForm(event));
 
 // launch modal event
@@ -31,6 +32,7 @@ modalCloseButton.addEventListener("click", () => {
 
 /* L'action par défaut du formulaire ne soit pas pris en compte par le navigateur 
 en utilisant la méthode preventDefault */
+/* Annule l'action par defaut du formulaire (l'envoi et la redirection). */
 const validateForm = (event) => {
   event.preventDefault();
 
@@ -91,20 +93,20 @@ const validateForm = (event) => {
         inputElement.parentNode.setAttribute("data-error", errorMessage));
   };
 
-  // Des conditions Ternaires
+  // Les conditions Ternaires plus élaborées =>
   /* On évalue d'abord la condition donnée. 
   Si la condition retourne vrai, alors on retourne l'erreur correspondant au champ,
    ainsi que son message d'erreur*/
 
   data.firstName.length < 2
     ? (setError(
-        firstNameInput,
-        "Veuillez entrer 2 caractères ou plus pour le champ du nom."
-      ),
+      firstNameInput,
+      "Veuillez entrer 2 caractères ou plus pour le champ du nom."
+    ),
       (errors["firstName"] = true))
     : null;
 
-  /* 
+  /*  Voici une des conditions classique =>
   if (data.firstName.length < 2) {
     setError(firstNameInput, "Veuillez entrer 2 caractères ou plus pour le champ du nom.");
     errors["firstName"] = true;
@@ -113,9 +115,9 @@ const validateForm = (event) => {
 
   data.lastName.length < 2
     ? (setError(
-        lastNameInput,
-        "Veuillez entrer 2 caractères ou plus pour le champ du prénom."
-      ),
+      lastNameInput,
+      "Veuillez entrer 2 caractères ou plus pour le champ du prénom."
+    ),
       (errors["lastName"] = true))
     : null;
   !data.email.match(emailRegex)
@@ -136,9 +138,9 @@ const validateForm = (event) => {
     : null;
   !touCheckbox.checked
     ? (setError(
-        touCheckbox,
-        "Vous devez vérifier que vous acceptez les termes et conditions."
-      ),
+      touCheckbox,
+      "Vous devez vérifier que vous acceptez les termes et conditions."
+    ),
       (errors["tos"] = true))
     : null;
   console.log(Object.keys(errors).length);
