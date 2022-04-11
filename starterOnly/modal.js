@@ -95,30 +95,26 @@ const validateForm = (event) => {
         inputElement.parentNode.setAttribute("data-error", errorMessage));
   };
 
-<<<<<<< HEAD
   // Les conditions Ternaires, une forme d'écriture plus élaborée:
-=======
-  // Les conditions Ternaires plus élaborées =>
->>>>>>> c7a355ec653b042e04cbd3268ecd5721c8d458f1
+
   /* On évalue d'abord la condition donnée. 
   Si la condition retourne vrai, alors on retourne l'erreur correspondant au champ,
    ainsi que son message d'erreur*/
 
   data.firstName.length < 2
     ? (setError(
-      firstNameInput,
-      "Veuillez entrer 2 caractères ou plus pour le champ du nom."
-    ),
+        firstNameInput,
+        "Veuillez entrer 2 caractères ou plus pour le champ du nom."
+      ),
       (errors["firstName"] = true))
     : null;
 
-<<<<<<< HEAD
   /*
   Une écriture différente, une condition classique =>
 
-=======
-  /*  Voici une des conditions classique =>
->>>>>>> c7a355ec653b042e04cbd3268ecd5721c8d458f1
+
+  /*  Voici une autre forme d'écriture de condition classique =>
+
   if (data.firstName.length < 2) {
     setError(firstNameInput, "Veuillez entrer 2 caractères ou plus pour le champ du nom.");
     errors["firstName"] = true;
@@ -127,9 +123,9 @@ const validateForm = (event) => {
 
   data.lastName.length < 2
     ? (setError(
-      lastNameInput,
-      "Veuillez entrer 2 caractères ou plus pour le champ du prénom."
-    ),
+        lastNameInput,
+        "Veuillez entrer 2 caractères ou plus pour le champ du prénom."
+      ),
       (errors["lastName"] = true))
     : null;
   !data.email.match(emailRegex)
@@ -150,9 +146,9 @@ const validateForm = (event) => {
     : null;
   !touCheckbox.checked
     ? (setError(
-      touCheckbox,
-      "Vous devez vérifier que vous acceptez les termes et conditions."
-    ),
+        touCheckbox,
+        "Vous devez vérifier que vous acceptez les termes et conditions."
+      ),
       (errors["tos"] = true))
     : null;
   console.log(Object.keys(errors).length);
