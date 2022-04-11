@@ -11,19 +11,22 @@ function editNav() {
 const modalbg = document.querySelector(".bground");
 const modalBtn = document.querySelectorAll(".modal-btn");
 const formData = document.querySelectorAll(".formData");
+
 // On créer la variable , en vérifiant son contenu
 const modalCloseButton = document.querySelector(".close");
 
 const form = document.getElementById("form");
-/* Ecoute l'evenement (submit: envoi du fomulaire (quand le bouton est pressé)) et lance la fonction validateForm(). */
+/* Ecoute l'evenement (submit: envoi du fomulaire (quand le bouton est pressé)) 
+et lance la fonction validateForm(). */
 form.addEventListener("submit", (event) => validateForm(event));
 
-// launch modal event
+// Une fonction d'ouverture du modal
 modalBtn.forEach((btn) =>
   btn.addEventListener("click", () => {
     modalbg.style.display = "block";
   })
 );
+
 /* Il s'agit d'un écouteur d'événements JavaScript. 
 Il écoute que l'utilisateur clique sur le bouton de fermeture. Lorsque
 l'utilisateur clique sur le bouton de fermeture, la modale est fermée.
@@ -34,7 +37,7 @@ modalCloseButton.addEventListener("click", () => {
 
 /* L'action par défaut du formulaire ne soit pas pris en compte par le navigateur 
 en utilisant la méthode preventDefault */
-/* Annule l'action par defaut du formulaire (l'envoi et la redirection). */
+// Une fonction qui permet d'envoyer le formulaire
 const validateForm = (event) => {
   event.preventDefault();
 
@@ -47,18 +50,16 @@ const validateForm = (event) => {
    * - quantity
    * - boutons radios
    * - bouton des CGU
+   * Ici on va récupérer des éléments du HTML de formulaire
    */
-
   const firstNameInput = document.getElementById("first");
   const lastNameInput = document.getElementById("last");
   const emailInput = document.getElementById("email");
   const birthdateInput = document.getElementById("birthdate");
   const quantityInput = document.getElementById("quantity");
-
   const locationRadios = document.getElementsByName("location");
   const radios = Array.from(locationRadios);
   const checked = radios.filter((radio) => radio.checked === true);
-
   const touCheckbox = document.getElementById("checkbox1");
 
   /* Regex ou expression régulière. Cela permet, entre autre, de vérifier le contenu d'une chaîne de caractères.*/
@@ -76,9 +77,7 @@ const validateForm = (event) => {
     quantity: quantityInput.value,
   };
 
-  /*
-    initialiser un tableau vide d'erreurs
-   */
+  // initialiser un tableau vide d'erreurs
   const errors = {};
 
   formData.forEach((formData) => {
@@ -95,16 +94,20 @@ const validateForm = (event) => {
         inputElement.parentNode.setAttribute("data-error", errorMessage));
   };
 
+  // Ici on créer les conditions d'envoi du formulaire =>
+
   // Les conditions Ternaires, une forme d'écriture plus élaborée:
 
   /* On évalue d'abord la condition donnée. 
   Si la condition retourne vrai, alors on retourne l'erreur correspondant au champ,
    ainsi que son message d'erreur*/
 
+  /*Ici cet exemple => Le champs du prénom ne doit pas être vide et
+ il doit aussi contenir au minimum 2 caractères.*/
   data.firstName.length < 2
     ? (setError(
         firstNameInput,
-        "Veuillez entrer 2 caractères ou plus pour le champ du nom."
+        "Veuillez entrer 2 caractères ou plus pour le champ du prénom."
       ),
       (errors["firstName"] = true))
     : null;
@@ -112,7 +115,7 @@ const validateForm = (event) => {
   /*  Voici une autre forme d'écriture de condition classique =>
 
   if (data.firstName.length < 2) {
-    setError(firstNameInput, "Veuillez entrer 2 caractères ou plus pour le champ du nom.");
+    setError(firstNameInput, "Veuillez entrer 2 caractères ou plus pour le champ du prénom.");
     errors["firstName"] = true;
   }
   */
@@ -120,7 +123,7 @@ const validateForm = (event) => {
   data.lastName.length < 2
     ? (setError(
         lastNameInput,
-        "Veuillez entrer 2 caractères ou plus pour le champ du prénom."
+        "Veuillez entrer 2 caractères ou plus pour le champ du nom."
       ),
       (errors["lastName"] = true))
     : null;
