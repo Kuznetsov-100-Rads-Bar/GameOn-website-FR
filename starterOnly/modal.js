@@ -57,7 +57,7 @@ const validateForm = (event) => {
 
   const touCheckbox = document.getElementById("checkbox1");
 
-  /* Regex */
+  /* Regex ou expression régulière. Cela permet, entre autre, de vérifier le contenu d'une chaîne de caractères.*/
   const emailRegex = /[A-Z0-9._%+-]+@[A-Z0-9-]+.+.[A-Z]{2,4}/gim;
   const quantityRegex = /\d+/; // Nombre uniquement
 
