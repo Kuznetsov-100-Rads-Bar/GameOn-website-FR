@@ -23,8 +23,10 @@ modalBtn.forEach((btn) =>
     modalbg.style.display = "block";
   })
 );
-/* This is a JavaScript event listener. It is listening for the user to click on the close button. When
-the user clicks on the close button, the modal is closed. */
+/* Il s'agit d'un écouteur d'événements JavaScript. 
+Il écoute que l'utilisateur clique sur le bouton de fermeture. Lorsque
+l'utilisateur clique sur le bouton de fermeture, la modale est fermée.
+ */
 modalCloseButton.addEventListener("click", () => {
   modalbg.style.display = "none";
 });
@@ -91,7 +93,7 @@ const validateForm = (event) => {
         inputElement.parentNode.setAttribute("data-error", errorMessage));
   };
 
-  // Des conditions Ternaires
+  // Les conditions Ternaires, une forme d'écriture plus élaborée:
   /* On évalue d'abord la condition donnée. 
   Si la condition retourne vrai, alors on retourne l'erreur correspondant au champ,
    ainsi que son message d'erreur*/
@@ -104,7 +106,9 @@ const validateForm = (event) => {
       (errors["firstName"] = true))
     : null;
 
-  /* 
+  /*
+  Une écriture différente, une condition classique =>
+
   if (data.firstName.length < 2) {
     setError(firstNameInput, "Veuillez entrer 2 caractères ou plus pour le champ du nom.");
     errors["firstName"] = true;
@@ -147,6 +151,7 @@ const validateForm = (event) => {
   }
 };
 
+// DOM
 const confirmationForm = () => {
   const modalBody = document.querySelector(".modal-body");
   form.style.display = "none";
