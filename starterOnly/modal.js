@@ -109,10 +109,6 @@ const validateForm = (event) => {
       (errors["firstName"] = true))
     : null;
 
-  /*
-  Une écriture différente, une condition classique =>
-
-
   /*  Voici une autre forme d'écriture de condition classique =>
 
   if (data.firstName.length < 2) {
