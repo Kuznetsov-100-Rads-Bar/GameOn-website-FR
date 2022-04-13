@@ -14,9 +14,10 @@ const formData = document.querySelectorAll(".formData");
 
 // On créer la variable , en vérifiant son contenu
 const modalCloseButton = document.querySelector(".close");
-
+// Je sélectionne et je stocke l'élément nécessaire
 const form = document.getElementById("form");
-/* Ecoute l'evenement (submit: envoi du fomulaire (quand le bouton est pressé)) 
+/* Je détecte la validation du formulaire =>
+Ecoute l'evenement (submit: envoi du fomulaire (quand le bouton est pressé)) 
 et lance la fonction validateForm(). */
 form.addEventListener("submit", (event) => validateForm(event));
 
@@ -80,6 +81,7 @@ const validateForm = (event) => {
   // initialiser un tableau vide d'erreurs
   const errors = {};
 
+  // Pour chaque champs désactiver les erreurs ou réinitialiser.
   formData.forEach((formData) => {
     formData.setAttribute("data-error-visible", false);
     formData.setAttribute("data-error", "");
@@ -150,9 +152,11 @@ const validateForm = (event) => {
       ),
       (errors["tos"] = true))
     : null;
-  console.log(Object.keys(errors).length);
+
   if (Object.keys(errors).length === 0) {
     confirmationForm();
+  } else {
+    console.error({ Errors: Object.keys(errors) });
   }
 };
 
