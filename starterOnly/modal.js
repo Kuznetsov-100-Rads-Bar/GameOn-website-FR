@@ -7,37 +7,42 @@ function editNav() {
   }
 }
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 // DOM Elements
 const modalbg = document.querySelector(".bground");
 const modalBtn = document.querySelectorAll(".modal-btn");
 const formData = document.querySelectorAll(".formData");
 
-// On créer la variable , en vérifiant son contenu
+// On créer la variable , avec cette constante qui permet de cibler l'élément du DOM ayant la classe "close".
 const modalCloseButton = document.querySelector(".close");
-// Je sélectionne et je stocke l'élément nécessaire
+
+// Je sélectionne et je stocke l'élément nécessaire en récupérant cet élément sur lequel on veut détecter
 const form = document.getElementById("form");
+
 /* Je détecte la validation du formulaire =>
 Ecoute l'evenement (submit: envoi du fomulaire (quand le bouton est pressé)) 
 et lance la fonction validateForm(). */
 form.addEventListener("submit", (event) => validateForm(event));
 
-// Une fonction d'ouverture du modal
+// Une fonction d'ouverture de la modale
 modalBtn.forEach((btn) =>
   btn.addEventListener("click", () => {
-    modalbg.style.display = "block";
+    modalbg.style.display = "block"; // Apparition de la modale, après le click
   })
 );
 
 /* Il s'agit d'un écouteur d'événements JavaScript. 
-Il écoute que l'utilisateur clique sur le bouton de fermeture. Lorsque
-l'utilisateur clique sur le bouton de fermeture, la modale est fermée.
+ Lorsque l'utilisateur clique sur le bouton de fermeture, la modale est fermée.
  */
 modalCloseButton.addEventListener("click", () => {
-  modalbg.style.display = "none";
+  // La fonction pour faire disparaître la modale.
+  modalbg.style.display = "none"; // Disparition de la modale, après le click.
 });
 
 /* L'action par défaut du formulaire ne soit pas pris en compte par le navigateur 
-en utilisant la méthode preventDefault */
+en utilisant la méthode preventDefault pour empêcher le comportement par défaut
+ de cet élément lors du click  */
 // Une fonction qui permet d'envoyer le formulaire
 const validateForm = (event) => {
   event.preventDefault();
@@ -51,7 +56,7 @@ const validateForm = (event) => {
    * - quantity
    * - boutons radios
    * - bouton des CGU
-   * Ici on va récupérer des éléments du HTML de formulaire
+   * Ici on va récupérer des éléments du HTML du formulaire
    */
   const firstNameInput = document.getElementById("first");
   const lastNameInput = document.getElementById("last");
@@ -64,11 +69,12 @@ const validateForm = (event) => {
   const touCheckbox = document.getElementById("checkbox1");
 
   /* Regex ou expression régulière. Cela permet, entre autre, de vérifier le contenu d'une chaîne de caractères.*/
-  const emailRegex = /[A-Z0-9._%+-]+@[A-Z0-9-]+.+.[A-Z]{2,4}/gim;
+  const emailRegex =
+    /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   const quantityRegex = /\d+/; // Nombre uniquement
 
   /*
-  récupérer les valeurs des champs dans un tableau d'objets "data"
+  On récupére les valeurs rentrées dans les champs dans un tableau d'objets "data"
    */
   const data = {
     firstName: firstNameInput.value,
@@ -78,7 +84,11 @@ const validateForm = (event) => {
     quantity: quantityInput.value,
   };
 
-  // initialiser un tableau vide d'erreurs
+  /* Dates handler */
+  const selectedDate = new Date(data.birthdate);
+  const currentDate = new Date(Date.now());
+
+  // On initialise un tableau vide d'erreurs
   const errors = {};
 
   // Pour chaque champs désactiver les erreurs ou réinitialiser.
@@ -97,7 +107,6 @@ const validateForm = (event) => {
   };
 
   // Ici on créer les conditions d'envoi du formulaire =>
-
   // Les conditions Ternaires, une forme d'écriture plus élaborée:
 
   /* On évalue d'abord la condition donnée. 
@@ -113,9 +122,7 @@ const validateForm = (event) => {
       ),
       (errors["firstName"] = true))
     : null;
-
   /*  Voici une autre forme d'écriture de condition classique =>
-
   if (data.firstName.length < 2) {
     setError(firstNameInput, "Veuillez entrer 2 caractères ou plus pour le champ du prénom.");
     errors["firstName"] = true;
@@ -129,22 +136,33 @@ const validateForm = (event) => {
       ),
       (errors["lastName"] = true))
     : null;
+  /* if (data.lastName.length < 2) {
+  setError(lastNameInput, "Veuillez entrer 2 caractères ou plus pour le champ du nom.");
+  errors["lasttName"] = true;
+  */
+
   !data.email.match(emailRegex)
     ? (setError(emailInput, "Veuillez entrer une adresse email valide."),
       (errors["email"] = true))
     : null;
-  !data.birthdate
+
+  !data.birthdate ||
+  selectedDate.getFullYear() > currentDate.getFullYear() - 12 ||
+  selectedDate.getFullYear() < currentDate.getFullYear() - 120
     ? (setError(birthdateInput, "Vous devez entrer votre date de naissance."),
       (errors["birthdate"] = true))
     : null;
+
   !data.quantity.match(quantityRegex)
     ? (setError(quantityInput, "Veuillez entrer un nombre valide."),
       (errors["quantity"] = true))
     : null;
+
   checked.length < 1
     ? (setError(locationRadios, "Vous devez choisir une option."),
       (errors["location"] = true))
     : null;
+
   !touCheckbox.checked
     ? (setError(
         touCheckbox,
@@ -153,7 +171,9 @@ const validateForm = (event) => {
       (errors["tos"] = true))
     : null;
 
+  // Ici on verifie les conditions de validationdu du formulaire.
   if (Object.keys(errors).length === 0) {
+    // Si les conditions ne sont pas respectées, alors le formulaire ne sera pas envoyé.
     confirmationForm();
   } else {
     console.error({ Errors: Object.keys(errors) });
