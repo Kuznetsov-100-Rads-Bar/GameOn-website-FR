@@ -1,11 +1,9 @@
-function editNav() {
-  var x = document.getElementById("myTopnav");
-  if (x.className === "topnav") {
-    x.className += " responsive";
-  } else {
-    x.className = "topnav";
-  }
-}
+const editNav = () => {
+  const x = document.getElementById("myTopnav");
+  x.className === "topnav"
+    ? (x.className += " responsive")
+    : (x.className = "topnav");
+};
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -101,7 +99,7 @@ const validateForm = (event) => {
   const setError = (inputElement, errorMessage) => {
     inputElement === locationRadios
       ? (inputElement[0].parentNode.setAttribute("data-error-visible", true),
-        inputElement[0].parentNode.setAttribute("data-error", errorMessage))
+        inputElement[0].parentNode.setAttribute("data-error", errorMessage)) //message error (red)
       : (inputElement.parentNode.setAttribute("data-error-visible", true),
         inputElement.parentNode.setAttribute("data-error", errorMessage));
   };
@@ -146,9 +144,10 @@ const validateForm = (event) => {
       (errors["email"] = true))
     : null;
 
+  // On créer une condition
   !data.birthdate ||
-  selectedDate.getFullYear() > currentDate.getFullYear() - 12 ||
-  selectedDate.getFullYear() < currentDate.getFullYear() - 120
+  selectedDate.getFullYear() > currentDate.getFullYear() - 12 || // si la date selectionnée est superieur à la date actuelle  -12 ans
+  selectedDate.getFullYear() < currentDate.getFullYear() - 120 // si la date selectionnée est inférieur à la date actuelle  -120 ans
     ? (setError(birthdateInput, "Vous devez entrer votre date de naissance."),
       (errors["birthdate"] = true))
     : null;
