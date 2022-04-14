@@ -61,9 +61,11 @@ const validateForm = (event) => {
   const emailInput = document.getElementById("email");
   const birthdateInput = document.getElementById("birthdate");
   const quantityInput = document.getElementById("quantity");
-  const locationRadios = document.getElementsByName("location");
-  const radios = Array.from(locationRadios);
-  const checked = radios.filter((radio) => radio.checked === true);
+
+  const checked = Array.from(document.getElementsByName("location")).filter(
+    (radio) => radio.checked === true
+  );
+
   const touCheckbox = document.getElementById("checkbox1");
 
   /* Regex ou expression régulière. Cela permet, entre autre, de vérifier le contenu d'une chaîne de caractères.*/
@@ -97,7 +99,7 @@ const validateForm = (event) => {
 
   // Affiche les messages d'erreurs si condition pas respecté
   const setError = (inputElement, errorMessage) => {
-    inputElement === locationRadios
+    inputElement === document.getElementsByName("location")
       ? (inputElement[0].parentNode.setAttribute("data-error-visible", true),
         inputElement[0].parentNode.setAttribute("data-error", errorMessage)) //message error (red)
       : (inputElement.parentNode.setAttribute("data-error-visible", true),
@@ -137,6 +139,7 @@ const validateForm = (event) => {
   /* if (data.lastName.length < 2) {
   setError(lastNameInput, "Veuillez entrer 2 caractères ou plus pour le champ du nom.");
   errors["lasttName"] = true;
+  }
   */
 
   !data.email.match(emailRegex)
@@ -144,7 +147,7 @@ const validateForm = (event) => {
       (errors["email"] = true))
     : null;
 
-  // On créer une condition
+  // On créer une condition pour la date de naissance
   !data.birthdate ||
   selectedDate.getFullYear() > currentDate.getFullYear() - 12 || // si la date selectionnée est superieur à la date actuelle  -12 ans
   selectedDate.getFullYear() < currentDate.getFullYear() - 120 // si la date selectionnée est inférieur à la date actuelle  -120 ans
@@ -158,7 +161,10 @@ const validateForm = (event) => {
     : null;
 
   checked.length < 1
-    ? (setError(locationRadios, "Vous devez choisir une option."),
+    ? (setError(
+        document.getElementsByName("location"),
+        "Vous devez choisir une option."
+      ),
       (errors["location"] = true))
     : null;
 
@@ -188,19 +194,11 @@ const confirmationForm = () => {
   modalBody.style.alignItems = "center";
 
   const modalContent = document.createElement("div");
-  modalContent.style.margin = "auto auto";
-  modalContent.style.display = "flex";
-  modalContent.style.flexDirection = "column";
-  modalContent.style.justifyContent = "center";
-  modalContent.style.height = "100%";
+  modalContent.classList.add("modal-confirmation-content");
 
   const confirmationTitle = document.createElement("h3");
   confirmationTitle.textContent = "Merci pour votre inscription";
-  confirmationTitle.style.textAlign = "center";
-  confirmationTitle.style.margin = "16px 0";
-  confirmationTitle.style.textContent = "auto";
-  confirmationTitle.style.flex = "3";
-  confirmationTitle.style.marginTop = "65%";
+  confirmationTitle.classList.add("confirmation-title");
 
   const confirmationButton = document.createElement("button");
   confirmationButton.classList.add("button");
